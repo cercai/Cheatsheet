@@ -41,12 +41,20 @@ curl -d name=daniel www.example.com
 curl -d @file www.example.com
 curl -d name=daniel www.example.com
 
+
+curl -c cookie.txt www.example.com/login
+curl -b cookie.txt -c cookie.txt -d name=toto -d password=1234 www.example.com/home
+
+curl -b cookies.txt -b "additional_param=new_value" https://example.com/dashboard
+
+# Ignore the certificate
+curl -k https://127.0.0.1/
 ```
 
 
 
 
-curl -b cookies.txt -b "additional_param=new_value" https://example.com/dashboard
+
 
 
 
