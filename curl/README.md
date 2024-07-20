@@ -1,5 +1,13 @@
 # CURL
 
+## Documentation
+
+Refer to this documentation if you have any question:
+`https://curl.haxx.se/book.html`
+
+## Examples
+
+It is possible to get the body of a page or the header or both:
 ```sh
 curl www.example.com
 <BODY>
@@ -10,8 +18,11 @@ curl -i www.example.com
 
 curl -I www.example.com
 <HEADER>
+```
 
+Use `-L` or `--location` to follow a redirection.
 
+```sh
 curl -I -L www.example.com
 <HEADER 1>
 <HEADER 2>
@@ -50,11 +61,9 @@ curl -b cookies.txt -b "additional_param=new_value" https://example.com/dashboar
 # Ignore the certificate
 curl -k https://127.0.0.1/
 
-
+curl -s -o file.save -w "%{json}" https://example.com
 curl -s -o /dev/null -w "%{http_code}" https://example.com
 curl -s -o /dev/null -w "%{json}" https://example.com
-
-
 ```
 
 
