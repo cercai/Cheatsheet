@@ -49,6 +49,12 @@ curl -b cookies.txt -b "additional_param=new_value" https://example.com/dashboar
 
 # Ignore the certificate
 curl -k https://127.0.0.1/
+
+
+curl -s -o /dev/null -w "%{http_code}" https://example.com
+curl -s -o /dev/null -w "%{json}" https://example.com
+
+
 ```
 
 
