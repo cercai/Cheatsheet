@@ -15,10 +15,10 @@ iptables --list
     target     prot opt source               destination
 ```
 
-INPUT: For packets destined to the local system.
-FORWARD: For packets routed through the system.
-OUTPUT: For packets generated locally and destined to the network.
-PREROUTING: For altering packets as they arrive.
+INPUT: For packets destined to the local system.<br>
+FORWARD: For packets routed through the system.<br>
+OUTPUT: For packets generated locally and destined to the network.<br>
+PREROUTING: For altering packets as they arrive.<br>
 POSTROUTING: For altering packets before they leave.
 
 To change the policy, use `-P`, add the Chain and finally the policy.
@@ -34,7 +34,7 @@ Drop the trafic using the port 25 from all the network.
 iptables -A INPUT -s 192.168.0.0/24 -p tcp --destination-port 25 -j DROP
 ```
 
-The priority of rules in iptables is determined by their order within a chain
+The priority of rules in iptables is determined by their order within a chain.
 To accept the trafic comming from a source, the rule that ACCEPT the trafic must be before the rule that DROP it.
 `-A` appends the new rule at the end of the list and `-I` adds it at the beginning.
 ```sh
