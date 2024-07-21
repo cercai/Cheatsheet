@@ -44,4 +44,33 @@ kubectl create deployment nginx --image nginx --replicas=3
 kubectl apply -f nginx-deploy.yaml
 ```
 
+## Expose ports
+In case you can't expose the ports
+```sh
+k expose deployment/nginx
+    error: couldn't find port via --port flag or introspection
+```
 
+You might need to define a containerPort in the deployment's specification.
+You can edit the deployment with the `kubectl edit deployment/nginx` command 
+```yaml
+containers:
+- image: nginx
+  imagePullPolicy: Always
+  name: nginx
+  # Add the following lines
+  ports:
+  - containerPort: 80
+  protocol: TCP
+```
+Then redo the`expose` command
+```sh
+kubectl expose deployment/nginx
+    service/nginx exposed
+```
+
+A service and an endpoint have been created.
+```sh
+kubectl get svc
+kubectl get ep
+```
