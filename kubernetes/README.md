@@ -44,6 +44,13 @@ kubectl create deployment nginx --image nginx --replicas=3
 kubectl apply -f nginx-deploy.yaml
 ```
 
+## Scaling
+
+To rescale a deployment, use the `scale` command.
+```sh
+k scale deploy nginx --replicas=3
+```
+
 ## Expose ports
 In case you can't expose the ports
 ```sh
@@ -68,9 +75,39 @@ Then redo the`expose` command
 kubectl expose deployment/nginx
     service/nginx exposed
 ```
+It is also possible to precise the service type
+```sh
+kubectl expose deployment nginx --type=LoadBalancer
+```
 
 A service and an endpoint have been created.
 ```sh
 kubectl get svc
 kubectl get ep
 ```
+
+### See the trafic
+
+List the interfaces
+```sh
+ip address show
+```
+For a brief answer, use `-br` and colorize with `-c`.<br>
+**a** stands for address.
+```sh
+ip -br -c a
+```
+
+To see the trafic on the interface use tcpdump
+```sh
+sudo tcpdump -i cilium_vxlan
+```
+
+Request the nginx homepage and you should see some traffic on the *cilium_vxlan* link.
+```sh
+curl IP:80
+curl servicename.namespace.svc.cluster.local
+```
+
+
+
