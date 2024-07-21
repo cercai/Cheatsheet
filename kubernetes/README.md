@@ -23,6 +23,22 @@ kubectl taint nodes node1 key1=value1:NoSchedule-
 ```
 
 
+# etcd
+
+```sh
+sudo grep --data-dir /etc/kubernetes/manifests/etcd.yaml
+    - --data-dir=/var/lib/etcd
+```
+
+Enter in the etcd pod:
+```sh
+kubectl exec -it etcd-instance-master -n kube-system -- sh
+cd /etc/kubernetes/pki/etcd
+# ls: command not found
+echo *
+```
+
+
 # Deployments
 
 List deployments
