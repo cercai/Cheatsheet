@@ -26,52 +26,72 @@ Use `-L` or `--location` to follow a redirection.
 curl -I -L www.example.com
 <HEADER 1>
 <HEADER 2>
-...
+```
 
+## Combinations
+
+Send several requests at once
+```sh
+# SENDS 9 REQUESTS
 curl www.example.com/file[1-9].txt
+# REQUESTS ODD TXT FILES
 curl www.example.com/file[1-9:2].txt  # 1.txt, 3.txt, 5.txt ..
+# BIGGER REQUEST
 curl www.example.com/file[01-99].txt
+# WITH LETTERS
 curl www.example.com/file[a-z].txt
-curl www.example.com/file[a-z:3].txt  # a.txt, d.txt, g.txt ..
-
-curl www.example.com/file[1-9].txt -o save_#1.txt  # files: save_1.txt, save_2.txt, etc..
+# a.txt, d.txt, g.txt ...
+curl www.example.com/file[a-z:3].txt
+# SAVE IN DIFFERENT FILES
+curl www.example.com/file[1-9].txt -o save_#1.txt
 curl www.example.com/{toto,titi,tata} -o file_#1.jpg
 curl www.example.com/{toto,titi,tata}/issue[012-132]
+```
 
-# For verbose
-curl -v www.example.com
+## Verbose
+
+If you need some verbose to see TLS handshake etc.
+```sh
 # Adding more v is useless
+curl -v www.example.com
+```
 
+## Headers
+
+```sh
 curl -H "Content-Type: application/json" www.example.com
 # Remove User-Agent in the header
 curl -H "User-Agent:" www.example.com
 # Leave it blank
 curl -H "User-Agent;" www.example.com
+```
 
+## Send data
+
+```sh
 curl -d name=daniel www.example.com
 curl -d @file www.example.com
 curl -d name=daniel www.example.com
+```
 
+## Cookies
 
+```sh
 curl -c cookie.txt www.example.com/login
 curl -b cookie.txt -c cookie.txt -d name=toto -d password=1234 www.example.com/home
 
 curl -b cookies.txt -b "additional_param=new_value" https://example.com/dashboard
-
-# Ignore the certificate
-curl -k https://127.0.0.1/
-
-curl -s -o file.save -w "%{json}" https://example.com
-curl -s -o /dev/null -w "%{http_code}" https://example.com
-curl -s -o /dev/null -w "%{json}" https://example.com
 ```
 
 
+## Ignore the certificate
+```sh
+curl -k https://127.0.0.1/
+```
 
 
-
-
-
-
-
+```sh
+curl -s -o file.save -w "%{json}" https://example.com
+curl -s -o /dev/null -w "%{http_code}" https://example.com
+```
 
