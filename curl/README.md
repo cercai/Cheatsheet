@@ -69,9 +69,8 @@ curl -H "User-Agent;" www.example.com
 ## Send data
 
 ```sh
-curl -d name=daniel www.example.com
+curl -d name=toto www.example.com
 curl -d @file www.example.com
-curl -d name=daniel www.example.com
 ```
 
 ## Cookies
@@ -83,15 +82,14 @@ curl -b cookie.txt -c cookie.txt -d name=toto -d password=1234 www.example.com/h
 curl -b cookies.txt -b "additional_param=new_value" https://example.com/dashboard
 ```
 
-
 ## Ignore the certificate
 ```sh
 curl -k https://127.0.0.1/
 ```
 
-
+## Fetch specific parameter
 ```sh
-curl -s -o file.save -w "%{json}" https://example.com
+curl -s -o file.save -w "%{json}" https://example.com | jq
 curl -s -o /dev/null -w "%{http_code}" https://example.com
 ```
 
