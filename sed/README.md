@@ -13,7 +13,7 @@ The command sed allows you to replace all the occurrence of a string string s1 i
 Both commands below do the same job.
 
 ```sh
-sed 's/string1/string2/' file.txt
+$ sed 's/string1/string2/' file.txt
 ```
 
 Replace some chars by others
@@ -59,8 +59,16 @@ $ sed '3d'
 # REMOVE LINES FROM 5 TO 8
 $ sed '5,8d' file.txt
 # REMOVE LINES BEGINING WITH FOO
-$ ed '/^foo/d' file.txt
+$ sed '/^foo/d' file.txt
 $ sed '2d ; # remove 2nd and 3rd lines; 3d'
+```
+
+## Filter
+
+To get only the lines beginning with a ;
+```sh
+# FILTER LINES BEGINNING WITH ';'
+$ sed -n '/^;/p'
 ```
 
 The sed commands might be written in a script file
