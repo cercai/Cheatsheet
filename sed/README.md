@@ -40,15 +40,6 @@ To update the input file, use `-i`
 $ sed -i 's/string1/string2/' input.txt
 ``` 
 
-Sed can also help us reading one specific line from a file.
-
-```sh
-# READ THE THIRD LINE
-$ sed -n '3p' file.txt
-# READ THE FIRST LINE
-$ sed -n '$p' file.txt
-```
-
 ## Remove lines
 
 To remove lines
@@ -65,11 +56,27 @@ $ sed '2d ; # remove 2nd and 3rd lines; 3d'
 
 ## Filter
 
-To get only the lines beginning with a ;
+To filter the lines and get only the ones beginning with a semicolon
+
 ```sh
 # FILTER LINES BEGINNING WITH ';'
 $ sed -n '/^;/p'
 ```
+
+Sed can also help us reading one specific line from a file.
+
+```sh
+# READ THE FIRST LINE
+$ sed -n '1p' file.txt
+# READ THE THIRD LINE
+$ sed -n '3p' file.txt
+# READ LINE 3 TO 7
+$ sed -n '3,7p' file.txt
+# READ THE LAST LINE
+$ sed -n '$p' file.txt
+```
+
+## SED COMMAND FILE
 
 The sed commands might be written in a script file
 
