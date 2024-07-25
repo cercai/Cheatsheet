@@ -102,10 +102,10 @@ Loop
 # EACH 2 LINES, REPLACE THE NUMBER BY A CROSS
 $ seq 50 | sed 'n;s/.*/x/'
 # SAME RESULT
-$ sed 50 | sed '0~2s/.*/x'
+$ seq 50 | sed '0~2s/.*/x'
 # EACH 4 LINES, REPLACE THE NUMBER BY A CROSS
-Seq 50 | sed 'n;n;n;s/.*/x/'
-$ sed 50 | sed '0~4s/.*/x'
+$ seq 50 | sed 'n;n;n;s/.*/x/'
+$ seq 50 | sed '0~4s/.*/x'
 ``` 
 
 # Add
@@ -113,7 +113,6 @@ $ sed 50 | sed '0~4s/.*/x'
 Appends a line
 
 ```sh
-
 $ seq 3 | sed '3a soleil !'
 1
 2
