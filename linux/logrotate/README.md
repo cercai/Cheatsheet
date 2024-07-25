@@ -5,7 +5,6 @@
 The Ubuntu documentation page: https://doc.ubuntu-fr.org/logrotate.
 
 Global Configuration File: `/etc/logrotate.conf`
-Individual Configuration Files: Files in the `/etc/logrotate.d/` directory.
 
 ```sh
 $ cat /etc/logrotate.conf
@@ -40,11 +39,13 @@ include /etc/logrotate.d
 
 To manually force a rotation, you can use:
 ```sh
-logrotate -f /etc/logrotate.conf
+$ logrotate -f /etc/logrotate.conf
 ```
 
-example
+Individual Configuration Files: Files in the `/etc/logrotate.d/` directory.
+
 ```sh
+$ cat /etc/logrotate.d/myapp
 /var/log/myapp.log {
     daily
     rotate 7
