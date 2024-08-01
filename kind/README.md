@@ -44,13 +44,38 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
 
 ```sh
-kubectl config use-context kind-kind-cluster
+$ kubectl config use-context kind-kind-cluster
 ```
 
 ```sh
-kubectl config get-contexts
+$ kubectl config get-contexts
+```
+
+Load image into your cluster
+```sh
+$ kind load docker-image my-custom-image-0
 ```
 
 
+```sh
+$ docker exec -it <controle-plane-cont> crictl images
+```
 
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: control-plane
+- role: control-plane
+- role: worker
+- role: worker
+```
+
+Get cluster's logs
+```sh
+$ kind export logs --name kind-cluster
+Exporting logs for cluster "kind-cluster" to:
+/tmp/3583915737
+```
 
