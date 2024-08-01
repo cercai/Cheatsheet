@@ -1,29 +1,78 @@
-# KIND
+# Kind
 
-To create a cluster: `kind create cluster --name <cluster-name>`
+Kind: Kubernetes in Docker, is a tool designed for running local Kubernetes clusters
+using Docker container "nodes". 
+
+## Create clusters
+
+To create a cluster: `kind create cluster --name <cluster-name> --config <config-file>`
 ```sh
+# Create a cluster with a default name: kind
+$ kind create cluster
+# Cluster with a specific name
 $ kind create cluster --name kind-cluster
-$ kind create cluster     # default name: kind
+# Create a cluster using a configuration file
+$ kind create cluster --name cluster-1 --config config.yaml
 ```
 
-List clusters:
+The configuration file can list the nodes and their roles
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: control-plane
+- role: worker
+- role: worker
+- role: worker
+```
+
+An image could also be specified:
+```yaml
+- role: control-plane
+  image: kindest/node:v1.30.2@sha256:ecfe5841b9bee4fe9690f49c118c33629fa345e3350a0c67a5a34482a99d6bba
+- role: worker
+  image: kindest/node:v1.30.2@sha256:ecfe5841b9bee4fe9690f49c118c33629fa345e3350a0c67a5a34482a99d6bba
+```
+
+## List the clusters, the nodes
+
+List the existing clusters:
 ```sh
 $ kind get clusters
 kind
 kind-cluster
+cluster-1
 ```
 
-Remove cluster: `kind delete cluster --name <cluster-name>
+List the nodes: `kind get nodes --name <cluster-name>`
+```sh
+$ kind get nodes --name cluster-1
+cluster-1-control-plane
+cluster-1-worker2
+cluster-1-worker
+```
+
+## Remove clusters
+
+Remove cluster: `kind delete cluster --name <cluster-name>`
 ```sh
 $ kind delete cluster --name kind
 ```
 
+## Images
 
-Get nodes: `kind get nodes --name <cluster-name>`
+Load an image into your cluster with the command `kind load docker-image <image>`
 ```sh
-$ kind get nodes --name kind-cluster
-kind-cluster-control-plane
+$ kind load docker-image nginx
 ```
+
+```sh
+$ docker exec -it <controle-plane-cont> crictl images
+```
+
+## Cluster configuration
+
 
 Get cluster configuration file `kind get kubeconfig --name <cluster-name>`
 ```yaml
@@ -51,26 +100,7 @@ $ kubectl config use-context kind-kind-cluster
 $ kubectl config get-contexts
 ```
 
-Load image into your cluster
-```sh
-$ kind load docker-image my-custom-image-0
-```
-
-
-```sh
-$ docker exec -it <controle-plane-cont> crictl images
-```
-
-```yaml
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-- role: control-plane
-- role: control-plane
-- role: worker
-- role: worker
-```
+# Cluster's logs
 
 Get cluster's logs
 ```sh
@@ -78,4 +108,3 @@ $ kind export logs --name kind-cluster
 Exporting logs for cluster "kind-cluster" to:
 /tmp/3583915737
 ```
-
