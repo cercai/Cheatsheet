@@ -32,7 +32,7 @@ ef90b14a642c   kindest/node:v1.30.0   "/usr/local/bin/entr…"   About an hour a
 ```
 
 Enter in the control-plane container and look at the pods inside
-```sh
+```console
 $ docker exec -it k8s-control-plane bash
 
 root@k8s-control-plane:/# crictl ps
