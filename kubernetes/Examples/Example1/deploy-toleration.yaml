@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dep-test-taint
+  name: dep-test-taint
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: dep-test-taint
+  template:
+    metadata:
+      labels:
+        app: dep-test-taint
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+      tolerations:
+      - key: "app"
+        operator: "Equal"
+        value: "nginx"
+        effect: "NoSchedule"
+      - key: "app"
+        operator: "Equal"
+        value: "nginx"
+        effect: "NoExecute"
+        tolerationSeconds: 5

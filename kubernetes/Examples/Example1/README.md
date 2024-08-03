@@ -1,5 +1,3 @@
-# Nodes
-
 ## Create the cluster
 
 Create a cluster with kind or however you want
@@ -19,8 +17,8 @@ CURRENT   NAME       CLUSTER    AUTHINFO   NAMESPACE
 *         kind-k8s   kind-k8s   kind-k8s
 ```
 
-Use `kubectl config use-context` to change the context
-Use `kubectl config use-cluster` to change the cluster
+Use `kubectl config use-context` to change the context,<br>
+and `kubectl config use-cluster` to change the cluster.
 
 ## List the nodes,pods
 
@@ -40,7 +38,7 @@ k8s-worker2         Ready    <none>          5m46s   v1.30.0   172.18.0.3    <no
 List the pods
 
 ```sh
-kubectl get pods --all-namespaces
+$ kubectl get pods --all-namespaces
 NAMESPACE            NAME                                        READY   STATUS    RESTARTS   AGE
 kube-system          coredns-7db6d8ff4d-87fkf                    1/1     Running   0          10m
 kube-system          coredns-7db6d8ff4d-th4zf                    1/1     Running   0          10m
@@ -57,7 +55,7 @@ kube-system          kube-scheduler-k8s-control-plane            1/1     Running
 local-path-storage   local-path-provisioner-988d74bc-jsgvk       1/1     Running   0          10m
 
 
-kubectl get pods --all-namespaces -o wide
+$ kubectl get pods --all-namespaces -o wide
 NAMESPACE            NAME                                        READY   STATUS    RESTARTS   AGE   IP           NODE                NOMINATED NODE   READINESS GATES
 kube-system          coredns-7db6d8ff4d-87fkf                    1/1     Running   0          10m   10.244.0.2   k8s-control-plane   <none>           <none>
 kube-system          coredns-7db6d8ff4d-th4zf                    1/1     Running   0          10m   10.244.0.4   k8s-control-plane   <none>           <none>
@@ -72,5 +70,46 @@ kube-system          kube-proxy-sw7fd                            1/1     Running
 kube-system          kube-proxy-z4zqn                            1/1     Running   0          10m   172.18.0.4   k8s-control-plane   <none>           <none>
 kube-system          kube-scheduler-k8s-control-plane            1/1     Running   0          11m   172.18.0.4   k8s-control-plane   <none>           <none>
 local-path-storage   local-path-provisioner-988d74bc-jsgvk       1/1     Running   0          10m   10.244.0.3   k8s-control-plane   <none>           <none>
+```
+
+At first, no worker node is tainted, only the master node is tainted.
+```sh
+$ kubectl describe nodes | grep -i taint
+Taints:             node-role.kubernetes.io/control-plane:NoSchedule
+Taints:             <none>
+Taints:             <none>
+```
+
+Create a deployment with first 1 replica then scale it to 2 replicas.
+```sh
+# CREATE 1 POD
+$ kubectl create deploy nginx-depl --image nginx --replicas 1
+deployment.apps/nginx-depl created
+# k8s-worker got the pod
+$ kubectl get pods -n default -o wide
+NAME                          READY   STATUS    RESTARTS   AGE   IP           NODE         NOMINATED NODE   READINESS GATES
+nginx-depl-85c9d7c5f4-6s554   1/1     Running   0          18s   10.244.2.2   k8s-worker   <none>           <none>
+# RESCALE THE DEPLOYMENT
+$ kubectl scale deploy nginx-depl --replicas 2
+deployment.apps/nginx-depl scaled
+# BOTH WORKER GOT ONE POD
+$ kubectl get pods -n default -o wide         
+NAME                          READY   STATUS    RESTARTS   AGE     IP           NODE          NOMINATED NODE   READINESS GATES
+nginx-depl-85c9d7c5f4-285h8   1/1     Running   0          2m41s   10.244.1.2   k8s-worker2   <none>           <none>
+nginx-depl-85c9d7c5f4-6s554   1/1     Running   0          3m21s   10.244.2.2   k8s-worker    <none>           <none>
+```
+
+
+## Taint a worker node
+
+Taint a node
+```sh
+$ kubectl taint nodes k8s-worker key1=value1:NoSchedule
+node/k8s-worker tainted
+
+$ kubectl describe nodes | grep -i taint
+Taints:             node-role.kubernetes.io/control-plane:NoSchedule
+Taints:             app=nginx:NoSchedule
+Taints:             <none>
 ```
 
