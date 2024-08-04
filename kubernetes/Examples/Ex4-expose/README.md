@@ -80,3 +80,29 @@ curl 10.96.245.172:80
 <title>Welcome to nginx!</title>
 ...
 ```
+
+To see the frontpage on your browser
+```console
+$ kubectl delete svc/nginx-depl  
+service "nginx-depl" deleted
+
+$ kubectl expose deployment/nginx-depl --type NodePort
+service/nginx-depl exposed
+```
+
+```console
+$ kubectl get nodes -o wide              
+NAME                STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME
+k8s-control-plane   Ready    control-plane   19h   v1.30.0   172.18.0.4    <none>        Debian GNU/Linux 12 (bookworm)   6.8.11-amd64     containerd://1.7.15
+k8s-worker          Ready    <none>          19h   v1.30.0   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.8.11-amd64     containerd://1.7.15
+k8s-worker2         Ready    <none>          19h   v1.30.0   172.18.0.3    <none>        Debian GNU/Linux 12 (bookworm)   6.8.11-amd64     containerd://1.7.15
+
+# REPLACE THE IP BY ANY IP OF YOUR NODES
+$ curl 172.18.0.2:31746
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+```
+
