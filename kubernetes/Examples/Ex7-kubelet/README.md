@@ -1,5 +1,5 @@
 
-# Expose
+# Kubelet
 
 ## Create the cluster
 
