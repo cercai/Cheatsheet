@@ -1,0 +1,22 @@
+[req]
+default_bits = 4096
+distinguished_name = dn
+prompt = no
+default_md = sha256
+req_extensions = req_ext
+
+[dn]
+C = FR
+ST = Haute garonne
+L = Toulouse
+O = lo
+OU = yo
+emailAddress = toto@gmail.com
+CN = toto
+
+[req_ext]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.0 = toto
+DNS.1 = baby
