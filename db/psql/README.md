@@ -30,7 +30,7 @@ $ psql -h localhost -p 5432 -U admin -d mydb
 
 List the databases
 ```cmd
-\t
+\l
 ```
 
 Select a database
@@ -55,7 +55,17 @@ List of tables in a database
 
 List of tables in a schema
 ```cmd
-\dt schema.*
+\dt <schema>.*
+```
+
+Describe a table
+```cmd
+\d <schema>.<table>
+```
+
+List functions
+```cmd
+\df
 ```
 
 
