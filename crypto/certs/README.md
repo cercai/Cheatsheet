@@ -2,6 +2,21 @@
 
 ## Creating certificates for client/servers
 
+### Create the Public Key Infrastructure
+First, we need to create a Public Key Infrastructure (PKI).
+We create the private pem key
+```cmd
+$ openssl genpkey -algorithm RSA -out private/ca.key -aes256
+```
+Enter a password then confirm it.
+After what, create the self-signed certificate
+```cmd
+$ openssl req -new -x509 -days 3650 -key private/ca.key -out certs/ca.crt
+```
+You will be asked to answer some questions.
+
+
+
 Openssl is used to create certificates for client/servers.
 There are two common methods to create the Certificate Signing Request (CSR)
 
@@ -58,7 +73,7 @@ $ openssl req -in <csr> -text -noout
 ## Read information from certificate
 To extract information from the x509 certificate, use the following command
 ```cmd
-$ openssl x509 -in <cer>
+$ openssl x509 -in <cer> -text -noout
 ```
 
 ## Check the private key and the certificate match

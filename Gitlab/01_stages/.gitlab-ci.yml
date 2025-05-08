@@ -1,0 +1,31 @@
+stages:
+  - build
+  - test
+  - deploy
+
+
+build_auto:
+  stage: build
+  script:
+  - mkdir build
+  - echo "renault" > build/renault.txt
+  artifacts:
+    paths:
+    - build/renault.txt
+
+
+test_auto:
+  stage: test
+  script:
+  - mkdir tests
+  - test -f build/renault.txt
+
+
+deploy_auto:
+  stage: deploy
+  script:
+  - mkdir deploy
+  - mv build/renault.txt deploy/renault.txt
+  artifacts:
+    paths:
+    - deploy/renault.txt
