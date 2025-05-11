@@ -6,14 +6,14 @@ In a single-node (e.g. Kind or Minikube), etcd runs as a static pod  and its con
 
 The data is stored in `/var/lib/etcd/member` with Snapshot (.snap) and Write-Ahead Log (.wal) files.
 ```console
-kubectl exec -n kube-system -it etcd-demo-control-plane -- sh -c "cd /var/lib/etcd/member/ && echo *"
+$ kubectl exec -n kube-system -it etcd-demo-control-plane -- sh -c "cd /var/lib/etcd/member/ && echo *"
 snap wal
 ```
 
 ## PKI certificates and keys
 The pki directory contains certificates and keys of the certificate authority, the etcd server when contacted by peers, or by api-server.
 ```console
-kubectl exec -n kube-system -it etcd-demo-control-plane -- sh -c "echo /etc/kubernetes/pki/etcd/*"
+$ kubectl exec -n kube-system -it etcd-demo-control-plane -- sh -c "echo /etc/kubernetes/pki/etcd/*"
 /etc/kubernetes/pki/etcd/ca.crt
 /etc/kubernetes/pki/etcd/ca.key
 /etc/kubernetes/pki/etcd/healthcheck-client.crt
@@ -29,7 +29,7 @@ kubectl exec -n kube-system -it etcd-demo-control-plane -- sh -c "echo /etc/kube
 You can retrieve some data with the etcdctl command line tool.<br>
 Get all the keys
 ```console
-etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+$ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt \
         --key=/etc/kubernetes/pki/etcd/healthcheck-client.key \
         get "" --prefix --keys-only
@@ -54,10 +54,10 @@ You can also get pods with the arg `/registry/pods` and be more specific by filt
 
 ## Save a snapshot
 
-To save a snapshot, the command is etcdctl snapshot save <snapshot>.
+To save a snapshot, the command is `etcdctl snapshot save <snapshot>`.
 
 ```console
-etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+$ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt \
         --key=/etc/kubernetes/pki/etcd/healthcheck-client.key \
 	snapshot save <snapshot's name>
@@ -65,10 +65,10 @@ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
 
 ## Restore a snapshot
 
-To retrieve a snapshot, the command is etcdctl snapshot restore <snapshot>.
+To retrieve a snapshot, the command is `etcdctl snapshot restore <snapshot>`.
 
 ```console
-etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+$ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt \
         --key=/etc/kubernetes/pki/etcd/healthcheck-client.key \
         snapshot restore <snapshot's path>
