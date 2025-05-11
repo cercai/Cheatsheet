@@ -11,15 +11,24 @@ snap wal
 ```
 
 ## PKI certificates and keys
-The pki directory contains certificate and key of Certificate Authority, the etcd server when contacted by peers, or by api-server.
+The pki directory contains certificates and keys of the certificate authority, the etcd server when contacted by peers, or by api-server.
 ```console
 kubectl exec -n kube-system -it etcd-demo-control-plane -- sh -c "echo /etc/kubernetes/pki/etcd/*"
-/etc/kubernetes/pki/etcd/ca.crt /etc/kubernetes/pki/etcd/ca.key /etc/kubernetes/pki/etcd/healthcheck-client.crt /etc/kubernetes/pki/etcd/healthcheck-client.key /etc/kubernetes/pki/etcd/peer.crt /etc/kubernetes/pki/etcd/peer.key /etc/kubernetes/pki/etcd/server.crt /etc/kubernetes/pki/etcd/server.key
+/etc/kubernetes/pki/etcd/ca.crt
+/etc/kubernetes/pki/etcd/ca.key
+/etc/kubernetes/pki/etcd/healthcheck-client.crt
+/etc/kubernetes/pki/etcd/healthcheck-client.key
+/etc/kubernetes/pki/etcd/peer.crt
+/etc/kubernetes/pki/etcd/peer.key
+/etc/kubernetes/pki/etcd/server.crt
+/etc/kubernetes/pki/etcd/server.key
 ```
 
 ## Get data from database
+
+You can retrieve some data with the etcdctl command line tool.<br>
 Get all the keys
-```cmd
+```console
 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt \
         --key=/etc/kubernetes/pki/etcd/healthcheck-client.key \
@@ -28,7 +37,7 @@ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
 
 Get a specific value, such as the namespaces in the cluster
 
-```cmd
+```console
 $ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt \
         --key=/etc/kubernetes/pki/etcd/healthcheck-client.key \
@@ -41,7 +50,11 @@ $ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
 /registry/namespaces/local-path-storage
 ```
 
+You can also get pods with the arg `/registry/pods` and be more specific by filtering with the namesppace using `/registry/pods/default`.
+
 ## Save a snapshot
+
+To save a snapshot, the command is etcdctl snapshot save <snapshot>.
 
 ```console
 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
@@ -52,11 +65,13 @@ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
 
 ## Restore a snapshot
 
+To retrieve a snapshot, the command is etcdctl snapshot restore <snapshot>.
+
 ```console
 etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt \
         --key=/etc/kubernetes/pki/etcd/healthcheck-client.key \
-        snapshot save <snapshot's path>
+        snapshot restore <snapshot's path>
 ```
 
 
