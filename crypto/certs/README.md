@@ -1,5 +1,16 @@
 # Certificates
 
+
+## Get the certificate from a domain
+
+```cmd
+$ openssl s_client -connect <domain:443> -showcerts
+
+# save it
+$ openssl s_client -connect <domain:443> -showcerts </dev/null 2>/dev/null | \
+  openssl x509 -outform PEM > cert.pem
+```
+
 ## Creating certificates for client/servers
 
 ### Create the Public Key Infrastructure

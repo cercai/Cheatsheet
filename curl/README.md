@@ -7,17 +7,16 @@ Refer to this documentation if you have any question:
 
 ## Examples
 
-It is possible to get the body of a page or the header or both:
+It is possible to get either the body or the header request and both:
 ```sh
-curl www.example.com
-<BODY>
+# Get the body only
+$ curl www.example.com
 
-curl -i www.example.com
-<HEADER>
-<BODY>
-
+# Get the request header only
 curl -I www.example.com
-<HEADER>
+
+# Get both
+$ curl -i www.example.com
 ```
 
 Use `-L` or `--location` to follow a redirection.
