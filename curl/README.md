@@ -87,6 +87,14 @@ curl -b cookies.txt -b "additional_param=new_value" https://example.com/dashboar
 curl -k https://127.0.0.1/
 ```
 
+## Add a certificate
+
+Tells curl to use a specific certificate to verify the peer.
+```
+curl --cacert <certificate> https://127.0.0.1/
+```
+
+
 ## Fetch specific parameter
 ```sh
 curl -s -o file.save -w "%{json}" https://example.com | jq
