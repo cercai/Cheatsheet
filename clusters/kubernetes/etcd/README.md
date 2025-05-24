@@ -74,4 +74,21 @@ $ etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         snapshot restore <snapshot's path>
 ```
 
+## Create an alias
+
+This is long and boring to add these certificates each time you want to interact with etcdctl so create an alias by adding to you `$HOME/.bashrc` the following:
+```console
+alias etcdctl="kubectl exec -it -n kube-system \
+    $(kubectl get pods -n kube-system | grep etcd | awk '{print $1}') -- \
+    etcdctl --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+    --cert=/etc/kubernetes/pki/etcd/healthcheck-client.crt \
+    --key=/etc/kubernetes/pki/etcd/healthcheck-client.key"
+```
+
+This is way more confortable to interact with etcdctl
+
+```console
+$ etcdctl --help
+$ etcdctl snapshot save snapshot-1
+```
 
